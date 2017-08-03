@@ -1,0 +1,16 @@
+ext {
+    compileSdkVersion = 25
+    buildToolsVersion = "25.0.2"
+    minSdkVersion = 16
+    targetSdkVersion = 25
+    versionCode = getVersionCode();
+    versionName = getVersionName();
+}
+
+def getVersionName() {
+    return "0.1.0"
+}
+
+def getVersionCode() {
+    return 1
+}
