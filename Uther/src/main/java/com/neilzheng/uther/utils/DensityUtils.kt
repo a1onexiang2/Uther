@@ -1,8 +1,9 @@
 package com.neilzheng.uther.utils
 
 import android.content.Context
+import android.util.DisplayMetrics
 import android.util.TypedValue
-
+import android.view.WindowManager
 
 
 /**
@@ -39,4 +40,18 @@ fun px2spf(context: Context, pxVal: Float): Float {
 
 fun px2sp(context: Context, pxVal: Float): Int {
     return px2spf(context, pxVal).toInt()
+}
+
+fun screenWidth(context: Context): Int {
+    val displayMetrics = DisplayMetrics()
+    val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    windowManager.defaultDisplay.getMetrics(displayMetrics)
+    return displayMetrics.widthPixels
+}
+
+fun screenHeight(context: Context): Int {
+    val displayMetrics = DisplayMetrics()
+    val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    windowManager.defaultDisplay.getMetrics(displayMetrics)
+    return displayMetrics.heightPixels
 }

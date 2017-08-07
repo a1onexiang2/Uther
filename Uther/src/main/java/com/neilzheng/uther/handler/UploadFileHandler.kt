@@ -8,7 +8,7 @@ import android.os.Build
 import android.text.TextUtils
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
-import com.neilzheng.uther.BaseWebViewActivity
+import com.neilzheng.uther.UtherParams
 
 /**
  * Created by Neil Zheng on 2017/6/19.
@@ -34,18 +34,18 @@ class UploadFileHandler(val context: Context) {
 
     private fun chooseFile(fileChooserParams: WebChromeClient.FileChooserParams?) {
         if (fileChooserParams != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity?.startActivityForResult(fileChooserParams.createIntent(), BaseWebViewActivity.Companion.REQUEST_UPLOAD_FILE)
+            activity?.startActivityForResult(fileChooserParams.createIntent(), UtherParams.REQUEST_UPLOAD_FILE)
         } else {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             intent.type = "*/*"
             activity?.startActivityForResult(Intent.createChooser(intent, "File Chooser"),
-                    BaseWebViewActivity.Companion.REQUEST_UPLOAD_FILE)
+                    UtherParams.REQUEST_UPLOAD_FILE)
         }
     }
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (BaseWebViewActivity.Companion.REQUEST_UPLOAD_FILE != requestCode) {
+        if (UtherParams.REQUEST_UPLOAD_FILE != requestCode) {
             return
         }
         if (resultCode == Activity.RESULT_CANCELED) {

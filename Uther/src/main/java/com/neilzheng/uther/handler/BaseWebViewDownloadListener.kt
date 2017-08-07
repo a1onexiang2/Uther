@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Environment
 import android.text.TextUtils
 import android.webkit.DownloadListener
-import com.neilzheng.uther.UtherConfig
+import com.neilzheng.uther.UtherParams
 import com.neilzheng.uther.WebViewUtils
 import java.io.File
 
@@ -49,7 +49,7 @@ class BaseWebViewDownloadListener(val context: Context): DownloadListener {
                 filename = System.currentTimeMillis().toString() + ""
             }
             val mFile = java.io.File(Environment.getExternalStorageDirectory().absolutePath + File.separator
-                    + UtherConfig.DOWNLOAD_PATH, filename)
+                    + UtherParams.DOWNLOAD_PATH, filename)
             if (!mFile.exists())
                 mFile.createNewFile()
             return mFile

@@ -40,3 +40,9 @@ hs*.log
 /output
 apkinfo.pyc
 redex-src-strings-map.txt
+/Uther/tools.jar
+/gradle.properties
+/gradlew
+/Uther/dokka-fatjar.jar
+/Uther/kotlin-bintray.gradle
+/gradlew.bat

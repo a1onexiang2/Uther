@@ -3,204 +3,101 @@ package com.neilzheng.uther
 import android.app.Activity
 import android.app.Fragment
 import android.content.Context
-import android.os.Build
+import android.content.Intent
 import android.support.v4.app.Fragment as SupportFragment
-import android.support.v7.widget.LinearLayoutCompat
-import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.DownloadListener
-import android.webkit.WebView
-import android.widget.FrameLayout
-import android.widget.LinearLayout
+import android.webkit.ValueCallback
 import com.neilzheng.uther.handler.IChromeListener
 import com.neilzheng.uther.handler.IUrlListener
-import com.neilzheng.uther.handler.SimpleChromeListener
 import com.neilzheng.uther.widget.BaseWebView
-import com.neilzheng.uther.widget.DefaultProgressBar
-import com.neilzheng.uther.widget.DefaultTitleBar
+import android.content.Context.WINDOW_SERVICE
+import android.view.WindowManager
+import com.neilzheng.uther.utils.screenHeight
+import com.neilzheng.uther.utils.screenWidth
+
 
 /**
  * Created by Neil Zheng on 2017/7/3.
  */
 
-class Uther {
+class Uther internal constructor(internal val webView: BaseWebView){
 
-    private var context: Context
-    private lateinit var webView: BaseWebView
-    private lateinit var parent: ViewGroup
-    private var layoutParams: ViewGroup.LayoutParams? = null
-    private var chromeClients = arrayListOf<IChromeListener>()
-    private var webClients = arrayListOf<IUrlListener>()
-    private var title: String? = null
-    private var url: String? = null
-    private var showProgressBar = false
-    private var showTitleBar = false
-    private var receiveTitle = false
-    private var videoProgress: View? = null
-    private var titleBar: DefaultTitleBar? = null
-    private var progressBar: DefaultProgressBar? = null
-    private var downloadListener: DownloadListener? = null
+    companion object {
 
-    constructor(activity: Activity) {
-        context = activity
-        parent = activity.findViewById(android.R.id.content) as ViewGroup
+        fun with(activity: Activity): UtherBuilder = UtherBuilder.with(activity)
+
+        fun with(fragment: Fragment): UtherBuilder = UtherBuilder.with(fragment)
+
+        fun with(fragment: SupportFragment): UtherBuilder = UtherBuilder.with(fragment)
+
+        fun with(view: View): UtherBuilder = UtherBuilder.with(view)
+
+        fun with(viewGroup: ViewGroup): UtherBuilder = UtherBuilder.with(viewGroup)
     }
 
-    constructor(fragment: Fragment) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            context = fragment.context
-        } else {
-            context = fragment.activity
-        }
-        parent = fragment.view as ViewGroup
+    fun handleBackAction(): Boolean {
+        return webView.handleBackAction()
     }
 
-    constructor(fragment: SupportFragment) {
-        context = fragment.context
-        parent = fragment.view as ViewGroup
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        webView.onActivityResult(requestCode, resultCode, data)
     }
 
-    fun parent(parent: ViewGroup,
-               layoutParams: ViewGroup.LayoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                       ViewGroup.LayoutParams.MATCH_PARENT)): Uther {
-        this.parent = parent
-        this.layoutParams = layoutParams
-        return this
+    fun callJs(js: String) {
+        webView.quickCallJs(js)
     }
 
-    fun chromeClients(vararg chromeClient: IChromeListener): Uther {
-        chromeClients.addAll(chromeClient)
-        return this
+    fun callJs(js: String, callback: ValueCallback<String>) {
+        webView.quickCallJs(js, callback)
     }
 
-    fun webClients(vararg webClient: IUrlListener): Uther {
-        webClients.addAll(webClient)
-        return this
+    fun quickCallJs(js: String) {
+        webView.quickCallJs(js)
     }
 
-    fun showProgressBar(boolean: Boolean): Uther {
-        showProgressBar = boolean
-        return this
+    fun quickCallJs(js: String, callback: ValueCallback<String>?, vararg params: String) {
+        webView.quickCallJs(js, callback, *params)
     }
 
-    fun setProgressBar(progressBar: DefaultProgressBar): Uther {
-        this.progressBar = progressBar
-        showProgressBar = true
-        return this
+    fun quickCallJs(js: String, vararg params: String) {
+        webView.quickCallJs(js, null, *params)
     }
 
-    fun showTitleBar(boolean: Boolean): Uther {
-        showTitleBar = boolean
-        return this
+    fun addUrlHandler(listener: IUrlListener) {
+        webView.addUrlHandler(listener)
     }
 
-    fun setTitleBar(titleBar: DefaultTitleBar): Uther {
-        this.titleBar = titleBar
-        showTitleBar = true
-        return this
+    fun addChromeHandler(listener: IChromeListener) {
+        webView.addChromeHandler(listener)
     }
 
-    fun receiveTitle(boolean: Boolean): Uther {
-        receiveTitle = boolean
-        return this
+    fun doPause() {
+        webView.doPause()
     }
 
-    fun videoProgress(videoProgress: View): Uther {
-        this.videoProgress = videoProgress
-        return this
+    fun doResume() {
+        webView.doResume()
     }
 
-    fun downloadListener(downloadListener: DownloadListener): Uther {
-        this.downloadListener = downloadListener
-        return this
+    fun doDestroy() {
+        webView.doDestroy()
     }
 
-    fun url(url: String?): Uther {
-        this.url = url
-        return this
+    fun loadUrl(url: String) {
+        webView.loadUrl(url)
     }
 
-    fun title(title: String?): Uther {
-        this.title = title
-        return this
+    fun reload() {
+        webView.reload()
     }
 
-    fun build(): BaseWebView {
-        webView = BaseWebView(context)
-        for (item in chromeClients) {
-            webView.addChromeHandler(item)
-        }
-        for (item in webClients) {
-            webView.addUrlHandler(item)
-        }
-        if (null != downloadListener) {
-            webView.setDownloadListener(downloadListener)
-        }
-        if (null == layoutParams) {
-            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT)
-        }
-        val rootContainer = LinearLayoutCompat(context)
-        rootContainer.orientation = LinearLayout.VERTICAL
-        rootContainer.layoutParams = LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT,
-                LinearLayoutCompat.LayoutParams.MATCH_PARENT)
-        val webViewContainer = android.widget.FrameLayout(context)
-        webViewContainer.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT)
-        rootContainer.addView(webViewContainer)
-        webViewContainer.addView(webView)
-        parent.addView(rootContainer, layoutParams)
-        if (showTitleBar) {
-            if (null == titleBar) {
-                inflateDefaultTitleBar()
-            }
-            rootContainer.addView(titleBar, 0)
-        }
-        if (showProgressBar) {
-            if (null == progressBar) {
-                inflateDefaultProgressBar()
-            }
-            webViewContainer.addView(progressBar)
-        }
-        if (showProgressBar || receiveTitle) {
-            webView.addChromeHandler(object : SimpleChromeListener() {
-                override fun onProgressChanged(view: WebView?, newProgress: Int): Boolean {
-                    if (showProgressBar) {
-                        when (newProgress) {
-                            100 -> progressBar!!.visibility = View.GONE
-                            else -> {
-                                progressBar!!.progress = newProgress
-                                progressBar!!.visibility = View.VISIBLE
-                            }
-                        }
-                    }
-                    return false
-                }
-
-                override fun onReceivedTitle(view: WebView?, title: String?): Boolean {
-                    if (showTitleBar && receiveTitle && !TextUtils.isEmpty(title)) {
-                        titleBar!!.title = title
-                    }
-                    return false
-                }
-            })
-        }
-        if (!TextUtils.isEmpty(title)) {
-            titleBar!!.title = title
-        }
-        if (!TextUtils.isEmpty(url)) {
-            webView.loadUrl(url)
-        }
-        return webView
+    fun setSize(width: Int, height: Int) {
+        val parent = webView.parent.parent as ViewGroup
+        val layoutParams = parent.layoutParams
+        layoutParams.width = if(width > screenHeight(webView.context)) ViewGroup.LayoutParams.MATCH_PARENT else width
+        layoutParams.height = if(height > screenHeight(webView.context)) ViewGroup.LayoutParams.MATCH_PARENT else height
+        parent.layoutParams = layoutParams
     }
 
-    private fun inflateDefaultTitleBar() {
-        titleBar = DefaultTitleBar(context)
-    }
-
-    private fun inflateDefaultProgressBar() {
-        progressBar = DefaultProgressBar(context, null, android.R.attr.progressBarStyleHorizontal,
-                android.R.style.Widget_ProgressBar_Horizontal)
-    }
 }

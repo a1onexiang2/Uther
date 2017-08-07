@@ -93,51 +93,51 @@ class BaseWebView : WebView {
         setDownloadListener(webViewDownloadListener)
     }
 
-    fun handleBackAction(): Boolean {
+    internal fun handleBackAction(): Boolean {
         return webViewClient.pageGoBack()
     }
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    internal fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         webViewChromeClient.onActivityResult(requestCode, resultCode, data)
     }
 
-    fun callJs(js: String) {
+    internal fun callJs(js: String) {
         jsCaller.quickCallJs(js)
     }
 
-    fun callJs(js: String, callback: ValueCallback<String>) {
+    internal fun callJs(js: String, callback: ValueCallback<String>) {
         jsCaller.quickCallJs(js, callback)
     }
 
-    fun quickCallJs(js: String) {
+    internal fun quickCallJs(js: String) {
         jsCaller.quickCallJs(js)
     }
 
-    fun quickCallJs(js: String, callback: ValueCallback<String>?, vararg params: String) {
+    internal fun quickCallJs(js: String, callback: ValueCallback<String>?, vararg params: String) {
         jsCaller.quickCallJs(js, callback, *params)
     }
 
-    fun quickCallJs(js: String, vararg params: String) {
+    internal fun quickCallJs(js: String, vararg params: String) {
         jsCaller.quickCallJs(js, null, *params)
     }
 
-    fun addUrlHandler(listener: IUrlListener) {
+    internal fun addUrlHandler(listener: IUrlListener) {
         webViewClient.addUrlListener(listener)
     }
 
-    fun addChromeHandler(listener: IChromeListener) {
+    internal fun addChromeHandler(listener: IChromeListener) {
         webViewChromeClient.addChromeListener(listener)
     }
 
-    fun doPause() {
+    internal fun doPause() {
         lifecycle.onPause()
     }
 
-    fun doResume() {
+    internal fun doResume() {
         lifecycle.onResume()
     }
 
-    fun doDestroy() {
+    internal fun doDestroy() {
         lifecycle.onDestroy()
     }
 }

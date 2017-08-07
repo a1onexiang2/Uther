@@ -1,12 +1,12 @@
-apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
+        applicationId "com.neilzheng.uther.sample"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
@@ -24,9 +24,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "com.android.support:recyclerview-v7:$support_version"
     implementation "com.android.support:appcompat-v7:$support_version"
+    implementation "com.android.support:design:$support_version"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation project(":Uther")
 }
-
-apply from: 'https://raw.githubusercontent.com/BaronZ/android-common/master/gradle/android-artifacts.gradle'
-apply from: 'https://raw.githubusercontent.com/BaronZ/android-common/master/gradle/gradle-jcenter-push.gradle'
-apply from: 'kotlin-bintray.gradle'
