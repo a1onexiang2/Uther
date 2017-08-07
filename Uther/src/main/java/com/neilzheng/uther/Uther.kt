@@ -2,7 +2,6 @@ package com.neilzheng.uther
 
 import android.app.Activity
 import android.app.Fragment
-import android.content.Context
 import android.content.Intent
 import android.support.v4.app.Fragment as SupportFragment
 import android.view.View
@@ -11,29 +10,26 @@ import android.webkit.ValueCallback
 import com.neilzheng.uther.handler.IChromeListener
 import com.neilzheng.uther.handler.IUrlListener
 import com.neilzheng.uther.widget.BaseWebView
-import android.content.Context.WINDOW_SERVICE
-import android.view.WindowManager
 import com.neilzheng.uther.utils.screenHeight
-import com.neilzheng.uther.utils.screenWidth
 
 
 /**
  * Created by Neil Zheng on 2017/7/3.
  */
 
-class Uther internal constructor(internal val webView: BaseWebView){
+class Uther internal constructor(internal val webView: BaseWebView) {
 
     companion object {
 
-        fun with(activity: Activity): UtherBuilder = UtherBuilder.with(activity)
+        @JvmStatic fun with(activity: Activity): UtherBuilder = UtherBuilder.with(activity)
 
-        fun with(fragment: Fragment): UtherBuilder = UtherBuilder.with(fragment)
+        @JvmStatic fun with(fragment: Fragment): UtherBuilder = UtherBuilder.with(fragment)
 
-        fun with(fragment: SupportFragment): UtherBuilder = UtherBuilder.with(fragment)
+        @JvmStatic fun with(fragment: SupportFragment): UtherBuilder = UtherBuilder.with(fragment)
 
-        fun with(view: View): UtherBuilder = UtherBuilder.with(view)
+        @JvmStatic fun with(view: View): UtherBuilder = UtherBuilder.with(view)
 
-        fun with(viewGroup: ViewGroup): UtherBuilder = UtherBuilder.with(viewGroup)
+        @JvmStatic fun with(viewGroup: ViewGroup): UtherBuilder = UtherBuilder.with(viewGroup)
     }
 
     fun handleBackAction(): Boolean {
@@ -95,8 +91,8 @@ class Uther internal constructor(internal val webView: BaseWebView){
     fun setSize(width: Int, height: Int) {
         val parent = webView.parent.parent as ViewGroup
         val layoutParams = parent.layoutParams
-        layoutParams.width = if(width > screenHeight(webView.context)) ViewGroup.LayoutParams.MATCH_PARENT else width
-        layoutParams.height = if(height > screenHeight(webView.context)) ViewGroup.LayoutParams.MATCH_PARENT else height
+        layoutParams.width = if (width > screenHeight(webView.context)) ViewGroup.LayoutParams.MATCH_PARENT else width
+        layoutParams.height = if (height > screenHeight(webView.context)) ViewGroup.LayoutParams.MATCH_PARENT else height
         parent.layoutParams = layoutParams
     }
 

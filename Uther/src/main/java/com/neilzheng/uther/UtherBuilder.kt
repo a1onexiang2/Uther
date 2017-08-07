@@ -50,22 +50,22 @@ class UtherBuilder private constructor(val context: Context, val viewGroup: View
 
     private constructor(fragment: SupportFragment) : this(fragment.context, fragment.view as ViewGroup)
 
-    companion object {
+    internal companion object {
 
-        fun with(activity: Activity): UtherBuilder = UtherBuilder(activity)
+        internal fun with(activity: Activity): UtherBuilder = UtherBuilder(activity)
 
-        fun with(fragment: Fragment): UtherBuilder = UtherBuilder(fragment)
+        internal fun with(fragment: Fragment): UtherBuilder = UtherBuilder(fragment)
 
-        fun with(fragment: SupportFragment): UtherBuilder = UtherBuilder(fragment)
+        internal fun with(fragment: SupportFragment): UtherBuilder = UtherBuilder(fragment)
 
-        fun with(view: View): UtherBuilder {
+        internal fun with(view: View): UtherBuilder {
             val result = UtherBuilder(view.context, view.parent as ViewGroup)
             result.view = view
             result.layoutParams = view.layoutParams
             return result
         }
 
-        fun with(viewGroup: ViewGroup): UtherBuilder = UtherBuilder(viewGroup.context, viewGroup)
+        internal fun with(viewGroup: ViewGroup): UtherBuilder = UtherBuilder(viewGroup.context, viewGroup)
 
     }
 

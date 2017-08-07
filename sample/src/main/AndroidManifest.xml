@@ -33,5 +33,6 @@
             android:name=".SimpleWebViewViewPagerActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true"/>
+        <activity android:name=".SimpleWebViewActivityJava"/>
     </application>
 </manifest>

@@ -16,7 +16,7 @@ import java.io.File
 
 internal class WebViewUtils {
 
-    companion object {
+    internal companion object {
 
         fun getIntentCompat(context: Context, file: File): Intent {
             var mIntent: Intent? = null
