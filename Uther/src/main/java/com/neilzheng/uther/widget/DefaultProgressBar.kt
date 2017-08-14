@@ -23,10 +23,10 @@ open class DefaultProgressBar : ProgressBar {
             : super(context, attrs, defStyleAttr, defStyleRes)
 
     init {
-        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-        elevation = dp2pxf(context, 2f)
-        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-        progressTintList = ColorStateList.valueOf(context.resources.getColor(R.color.colorAccent))
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            elevation = dp2pxf(context, 2f)
+            progressTintList = ColorStateList.valueOf(context.resources.getColor(R.color.colorAccent))
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

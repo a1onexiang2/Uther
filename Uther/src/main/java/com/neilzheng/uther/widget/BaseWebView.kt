@@ -35,7 +35,6 @@ class BaseWebView : WebView {
         initSetting()
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private fun initSetting() {
         settings.javaScriptEnabled = true
         settings.setSupportZoom(true)
@@ -63,12 +62,11 @@ class BaseWebView : WebView {
         val dir = context.cacheDir.absolutePath + "/cache"
         settings.setAppCachePath(dir)
         CookieManager.getInstance().setAcceptCookie(true)
-        val sdk = Build.VERSION.SDK_INT
-        if (sdk >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
             setLayerType(LAYER_TYPE_HARDWARE, null)
             CookieManager.getInstance().setAcceptThirdPartyCookies(this, true)
-        } else if (sdk >= Build.VERSION_CODES.KITKAT) {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setLayerType(LAYER_TYPE_HARDWARE, null)
         } else {
             settings.databasePath = context.filesDir.path;
