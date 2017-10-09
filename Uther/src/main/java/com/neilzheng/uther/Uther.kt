@@ -84,6 +84,10 @@ class Uther internal constructor(internal val webView: BaseWebView) {
         webView.loadUrl(url)
     }
 
+    fun loadUrl(url: String, headers: HashMap<String, String>) {
+        webView.loadUrl(url, headers)
+    }
+
     fun reload() {
         webView.reload()
     }
