@@ -24,6 +24,7 @@ class TestWebViewActivity : AppCompatActivity() {
             "http://www.taobao.com",
             "http://www.wandoujia.com/apps",
             "file:///android_asset/sms/sms.html",
+            "http://121.41.18.115:8080/pay/vip",
             "")
 
     override fun onCreate(savedInstanceState: Bundle?) {

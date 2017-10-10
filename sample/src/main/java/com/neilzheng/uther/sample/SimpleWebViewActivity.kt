@@ -29,4 +29,9 @@ class SimpleWebViewActivity : BaseWebViewActivity() {
                 .build()
     }
 
+    override fun onBackPressed() {
+        if (!uther.handleBackAction()) {
+            super.onBackPressed()
+        }
+    }
 }

@@ -36,8 +36,9 @@ open class BaseWebViewClient(val webView: WebView, val context: Context) : WebVi
     }
 
     override fun onPageFinished(view: WebView?, url: String?) {
-        if (isLoading || (null != url && url.startsWith("about:"))) {
+        if (isLoading || isBacking || (null != url && !url.startsWith("about:"))) {
             isLoading = false
+            isBacking = false
         }
         if (!urlHandler.onPageFinished(view, url)) {
             super.onPageFinished(view, url)
@@ -73,7 +74,7 @@ open class BaseWebViewClient(val webView: WebView, val context: Context) : WebVi
     }
 
     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-        if (!isBacking && null != url) {
+        if (!isBacking && (null != url && !url.startsWith("about:"))) {
             depths.push(Pair(url, depth++))
             if (isLoading && urls.isNotEmpty()) {
                 urlBefore302 = urls.pop()

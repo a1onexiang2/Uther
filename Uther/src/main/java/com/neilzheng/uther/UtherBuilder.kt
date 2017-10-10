@@ -35,6 +35,7 @@ class UtherBuilder private constructor(val context: Context, val viewGroup: View
     private var receiveTitle = true
     private var title: String? = null
     private var url: String? = null
+    private var header: Map<String, String> = HashMap()
     private var titleBar: Toolbar? = null
     private var progressBar: ProgressBar? = null
     private var videoProgress: View? = null
@@ -116,6 +117,11 @@ class UtherBuilder private constructor(val context: Context, val viewGroup: View
         return this
     }
 
+    fun setHeader(header: Map<String, String>): UtherBuilder {
+        this.header = header
+        return this
+    }
+
     fun addUrlListener(vararg urlListener: IUrlListener): UtherBuilder {
         this.urlListeners.addAll(urlListener)
         return this
@@ -194,7 +200,7 @@ class UtherBuilder private constructor(val context: Context, val viewGroup: View
             titleBar!!.title = title
         }
         if (!TextUtils.isEmpty(url)) {
-            webView.loadUrl(url)
+            webView.loadUrl(url, header)
         }
         return Uther(webView)
     }

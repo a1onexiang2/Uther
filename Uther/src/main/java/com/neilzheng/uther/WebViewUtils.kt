@@ -19,7 +19,7 @@ internal class WebViewUtils {
     internal companion object {
 
         fun getIntentCompat(context: Context, file: File): Intent {
-            var mIntent: Intent? = null
+            val mIntent: Intent
             if (context.applicationInfo.targetSdkVersion >= Build.VERSION_CODES.N) {
                 mIntent = Intent(Intent.ACTION_VIEW)
                 mIntent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive")
