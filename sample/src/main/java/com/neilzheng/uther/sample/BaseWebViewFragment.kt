@@ -17,15 +17,15 @@ abstract class BaseWebViewFragment : BaseFragment() {
     protected var showProgressBar = true
 
     override fun initIntentData() {
-        if (arguments.containsKey(UtherParams.EXTRA_URL)) {
-            url = arguments.getString(UtherParams.EXTRA_URL)
+        if (arguments!!.containsKey(UtherParams.EXTRA_URL)) {
+            url = arguments!!.getString(UtherParams.EXTRA_URL)
         }
-        if (arguments.containsKey(UtherParams.EXTRA_TITLE)) {
-            title = arguments.getString(UtherParams.EXTRA_TITLE)
+        if (arguments!!.containsKey(UtherParams.EXTRA_TITLE)) {
+            title = arguments!!.getString(UtherParams.EXTRA_TITLE)
         }
-        receiveTitleFlag = arguments.getBoolean(UtherParams.EXTRA_RECEIVE_TITLE, true)
-        showTitleBar = arguments.getBoolean(UtherParams.EXTRA_SHOW_TITLEBAR, true)
-        showProgressBar = arguments.getBoolean(UtherParams.EXTRA_SHOW_PROGRESSBAR, true)
+        receiveTitleFlag = arguments!!.getBoolean(UtherParams.EXTRA_RECEIVE_TITLE, true)
+        showTitleBar = arguments!!.getBoolean(UtherParams.EXTRA_SHOW_TITLEBAR, true)
+        showProgressBar = arguments!!.getBoolean(UtherParams.EXTRA_SHOW_PROGRESSBAR, true)
     }
 
     override fun initData() {

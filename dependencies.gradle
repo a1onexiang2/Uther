@@ -1,16 +1,16 @@
 ext {
-    compileSdkVersion = 25
-    buildToolsVersion = "25.0.2"
+    compileSdkVersion = 26
+    buildToolsVersion = "26.0.2"
     minSdkVersion = 16
-    targetSdkVersion = 25
+    targetSdkVersion = 26
     versionCode = getVersionCode();
     versionName = getVersionName();
 }
 
 def getVersionName() {
-    return "0.1.7"
+    return "0.1.9"
 }
 
 def getVersionCode() {
-    return 8
+    return 10
 }

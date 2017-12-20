@@ -13,9 +13,9 @@ abstract class BaseFragment : Fragment(), IFragment {
     private var isVisibleToUser = false
     private var isInViewPager = false
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (null == rootView) {
-            rootView = inflater!!.inflate(layoutId, container, false)
+            rootView = inflater.inflate(layoutId, container, false)
             // 解决点击穿透问题
             rootView?.setOnTouchListener { _, _ -> true }
         }

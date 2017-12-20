@@ -43,13 +43,13 @@ class UtherBuilder private constructor(val context: Context, val viewGroup: View
     private var urlListeners = arrayListOf<IUrlListener>()
     private var downloadListener: DownloadListener? = null
 
-    private constructor(activity: Activity) : this(activity, activity.findViewById(android.R.id.content) as ViewGroup)
+    private constructor(activity: Activity) : this(activity, activity.findViewById<ViewGroup>(android.R.id.content))
 
     private constructor(fragment: Fragment) : this(
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) fragment.context else fragment.activity,
             fragment.view as ViewGroup)
 
-    private constructor(fragment: SupportFragment) : this(fragment.context, fragment.view as ViewGroup)
+    private constructor(fragment: SupportFragment) : this(fragment.context!!, fragment.view as ViewGroup)
 
     internal companion object {
 

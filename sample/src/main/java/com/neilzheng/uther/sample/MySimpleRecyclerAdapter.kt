@@ -46,7 +46,7 @@ class MySimpleRecyclerAdapter(val list: Array<String>) : RecyclerView.Adapter<Ba
     }
 
     class MyViewHolder(view: View) : BaseViewHolder(view) {
-        var button: AppCompatButton = view.findViewById(R.id.button) as AppCompatButton
+        var button: AppCompatButton = view.findViewById<AppCompatButton>(R.id.button)
     }
 
 }
